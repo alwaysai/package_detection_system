@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "python app.py"
+  },
+  "models": {
+    "testuser/package_detector": 1,
+    "alwaysai/mobilenet_ssd": 4
+  }
+}
