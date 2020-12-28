@@ -23,8 +23,7 @@ class PackageMonitor:
         and the ObjectDetectionPrediction as the value.
         """
         self.previous_packages = deepcopy(self.current_packages)
-        if len(objects) > 0:
-            self.rois = deepcopy(objects)
+        
         self.current_packages = deepcopy(objects)
         self.check_for_updates()
 
@@ -76,11 +75,13 @@ class PackageMonitor:
                 else:
                     action += "False alarm, packages are there.\n"
                     print(action) #printing this for demo purposes
-                self.pending = False   
+                self.pending = False  
+                self.rois = deepcopy(self.current_packages)
             else:
                 return action       
         if len(self.packages_removed) > 0:
             self.pending = True
+            self.rois = deepcopy(self.previous_packages)
             self.timer = time.time()
             action += "PACKAGES MAY HAVE BEEN REMOVED\n"
             print(action) #printing this for demo purposes
@@ -102,7 +103,8 @@ class PackageMonitor:
         """
         rois = [prediction.box for prediction in self.rois.values()]
         predictions = [prediction.box for prediction in self.current_packages.values()]
-        
+        print("roi length {}".format(len(rois)))
+        print("predictions length {}".format(len(predictions)))
         for roi in rois:
             match = False
             for pred in predictions:

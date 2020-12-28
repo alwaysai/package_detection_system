@@ -21,7 +21,7 @@ def main():
 
     # add a centroid tracker to see if a new package arrives
     centroid_tracker = edgeiq.CentroidTracker(
-                                deregister_frames=50, max_distance=50)
+                                deregister_frames=10, max_distance=50)
 
     # Descriptions printed to console
     print("Engine: {}".format(package_detector.engine))
@@ -63,7 +63,7 @@ def main():
 
                     # Check for packages in the new frame
                     package_results = package_detector.detect_objects(
-                            frame, confidence_level=.9)
+                            frame, confidence_level=.90)
                     
                     # update the package predictions
                     objects = centroid_tracker.update(package_results.predictions)
