@@ -1,14 +1,13 @@
 import time
 import edgeiq
-import numpy
 from package_monitor import PackageMonitor
 """
 Monitor an area for packages and people and respond when packages have
 been removed from the area.
 """
 
-def main():
 
+def main():
     # First make a detector to detect packages objects
     # !! You'll need to replace this with your own model. See README.md !!
     package_detector = edgeiq.ObjectDetection(
@@ -53,7 +52,7 @@ def main():
 
             # Loop detection
             while True:
-                counter += 1  
+                counter += 1
 
                 # Run this loop whenever there's a package detected or every DETECT_RATE frames
                 if pm.package_is_detected() or counter % DETECT_RATE == 0:
@@ -64,7 +63,7 @@ def main():
                     # Check for packages in the new frame
                     package_results = package_detector.detect_objects(
                             frame, confidence_level=.90)
-                    
+
                     # update the package predictions
                     objects = centroid_tracker.update(package_results.predictions)
                     pm.set_packages(objects)
@@ -74,23 +73,27 @@ def main():
                         person_results = person_detector.detect_objects(
                                 frame, confidence_level=0.5)
 
-                        person_predictions = edgeiq.filter_predictions_by_label(person_results.predictions, ['person'])
-                        
+                        person_predictions = edgeiq.filter_predictions_by_label(
+                                person_results.predictions, ['person'])
+
                         frame = edgeiq.markup_image(
-                            frame, person_predictions, 
-                            show_labels=True, line_thickness=3, font_size=1, font_thickness=3, show_confidences=False, colors=[(0,0,255)])
-                        
+                                frame, person_predictions, show_labels=True, line_thickness=3,
+                                font_size=1, font_thickness=3, show_confidences=False,
+                                colors=[(0, 0, 255)])
+
                         pm.set_person(person_predictions)
 
                         # remove packages that might actually be people
-                        package_predictions = pm.remove_conflicting(person_results, package_results)
-                        package_results = edgeiq.ObjectDetectionResults(package_predictions, package_results.duration, frame)
+                        package_predictions = pm.remove_conflicting(
+                                person_results, package_results)
+                        package_results = edgeiq.ObjectDetectionResults(
+                                package_predictions, package_results.duration, frame)
 
                     # Generate labels to display the face detections on the streamer
                     text = ["Model: {}".format("alwaysai/package_detector")]
                     text.append(
                             "Inference time: {:1.3f} s".format(package_results.duration))
-                    
+
                     predictions = []
 
                     # update labels for each identified package to print to the screen
@@ -98,14 +101,14 @@ def main():
                         new_label = 'Package {}'.format(object_id)
                         prediction.label = new_label
                         text.append(new_label)
-                        predictions.append(prediction)  
+                        predictions.append(prediction)
 
                     # Alter the original frame mark up to show tracking labels
                     frame = edgeiq.markup_image(
-                            frame, predictions, 
+                            frame, predictions,
                             show_labels=True, show_confidences=False,
                             line_thickness=3, font_size=1, font_thickness=3)
-                        
+
                     # Do some action based on state
                     text.append(pm.action())
 
