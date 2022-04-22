@@ -5,7 +5,7 @@ This app is designed to let you use your own custom package detection model to d
 - [alwaysAI CLI tools](https://dashboard.alwaysai.co/docs/getting_started/development_computer_setup.html)
 
 ## Requirements
-This app is intended to work on a model you've trained yourself! Follow the steps below before running your app. The alwaysAI support team is available on Discord to help you if you get stuck: https://discord.gg/rjDdRPT.
+This app is intended to work on a model you've trained yourself! Follow the steps below before running your app. The alwaysAI support team is available on Discord to help you if you get stuck: https://discord.gg/alwaysai.
 
 ### Collect a Dataset
 To get you up and running, we've prepared a [dataset](https://www.alwaysai.co/docs/_static/beta/Packages.zip) that includes a few hundred images of packages being placed and removed from an outdoor doorstep. This app will work best using a model that has been trained on your own doorstep (or wherever you intend to run your app), so we encourage you to add to this dataset. See [this doc](https://alwaysai.co/docs/model_training/data_collection.html#data-capture-guidelines) for data collection tips). For speedy data collection, you can use this [image capture app](https://github.com/alwaysai/expanded-image-capture-dashboard) available on the alwaysAI GitHub. Also checkout the [hacky hour](https://www.youtube.com/watch?v=jNpxVea8F9Q&feature=youtu.be) on the package dataset collection for tips on how to set up your own data collection process.
@@ -68,6 +68,7 @@ PACKAGES MAY HAVE BEEN REMOVED
 ## Troubleshooting
 Docs: https://dashboard.alwaysai.co/docs/getting_started/introduction.html
 
-Community Discord: https://discord.gg/rjDdRPT
+Community Discord: https://discord.gg/alwaysai
 
 Email: support@alwaysai.co
+o
